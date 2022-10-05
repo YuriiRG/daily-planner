@@ -5,7 +5,7 @@ export default function Root() {
 
   return (
     <div className='text-center'>
-      <h1>Vite + React</h1>
+      <h1>Vite + React + TS</h1>
       <div className='card'>
         <button onClick={() => setCount((c) => c + 1)}>
           count is {count}
