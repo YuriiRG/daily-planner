@@ -25,13 +25,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: install-deps
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3.4.1
-        with:
-          node-version: 16
-      - uses: pnpm/action-setup@v2.2.2
-        with:
-          version: latest
       - name: Build the project
         run: pnpm build
   eslint:
@@ -39,13 +32,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: install-deps
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3.4.1
-        with:
-          node-version: 16
-      - uses: pnpm/action-setup@v2.2.2
-        with:
-          version: latest
       - name: Run the linter
         run: pnpm lint
   tests:
@@ -53,12 +39,5 @@ jobs:
     runs-on: ubuntu-latest
     needs: install-deps
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3.4.1
-        with:
-          node-version: 16
-      - uses: pnpm/action-setup@v2.2.2
-        with:
-          version: latest
       - name: Run the tests
         run: pnpm test
