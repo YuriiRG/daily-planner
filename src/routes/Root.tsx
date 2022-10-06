@@ -11,7 +11,6 @@ export default function Root() {
           count is {count}
         </button>
       </div>
-      <p>Click on the Vite and React logos to learn more</p>
     </div>
   );
 }
