@@ -2,7 +2,7 @@ name: Checks
 
 on:
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
   workflow_dispatch:
 
@@ -18,10 +18,8 @@ jobs:
       - uses: pnpm/action-setup@v2.2.2
         with:
           version: latest
-      
       - name: Install dependencies
-        run: pnpm install
-  
+        run: pnpm install --frozen-lockfile
       - name: Build the project
         run: pnpm build
   eslint:
@@ -35,6 +33,8 @@ jobs:
       - uses: pnpm/action-setup@v2.2.2
         with:
           version: latest
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
       - name: Run the linter
         run: pnpm lint
   tests:
@@ -48,5 +48,7 @@ jobs:
       - uses: pnpm/action-setup@v2.2.2
         with:
           version: latest
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
       - name: Run the tests
         run: pnpm test
