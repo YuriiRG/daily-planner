@@ -7,7 +7,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  install-deps:
+  build:
+    name: Build the project
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -17,27 +18,37 @@ jobs:
       - uses: pnpm/action-setup@v2.2.2
         with:
           version: latest
-
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-  build:
-    name: Build the project
-    runs-on: ubuntu-latest
-    needs: install-deps
-    steps:
       - name: Build the project
         run: pnpm build
   eslint:
     name: Run the linter
     runs-on: ubuntu-latest
-    needs: install-deps
     steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3.4.1
+        with:
+          node-version: 16
+      - uses: pnpm/action-setup@v2.2.2
+        with:
+          version: latest
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
       - name: Run the linter
         run: pnpm lint
   tests:
     name: Run the tests
     runs-on: ubuntu-latest
-    needs: install-deps
     steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3.4.1
+        with:
+          node-version: 16
+      - uses: pnpm/action-setup@v2.2.2
+        with:
+          version: latest
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
       - name: Run the tests
         run: pnpm test
