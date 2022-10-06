@@ -10,6 +10,7 @@ export default function Root() {
         <button onClick={() => setCount((c) => c + 1)}>
           count is {count}
         </button>
+        <span>Some changes</span>
       </div>
     </div>
   );
