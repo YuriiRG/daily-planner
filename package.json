@@ -8,9 +8,12 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint src --max-warnings 0",
-    "prettier": "prettier --write src",
+    "prettier": "prettier --write",
     "test": "vitest",
     "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,css,html,md}": "pnpm prettier"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -31,14 +34,15 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-react": "^7.31.8",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.0",
     "jsdom": "^20.0.1",
+    "lint-staged": "^13.0.3",
     "postcss": "^8.4.17",
     "prettier": "^2.7.1",
     "prettier-plugin-tailwindcss": "^0.1.13",
     "tailwindcss": "^3.1.8",
     "typescript": "^4.8.4",
     "vite": "^3.1.4",
-    "vitest": "^0.23.4",
-    "husky": "^8.0.0"
+    "vitest": "^0.23.4"
   }
 }
