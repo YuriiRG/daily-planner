@@ -4,9 +4,5 @@ import Navbar from './components/Navbar';
 import { router } from './router';
 
 export default function App() {
-  return (
-    <React.StrictMode>
-      <RouterProvider router={router} />
-    </React.StrictMode>
-  );
+  return <RouterProvider router={router} />;
 }
