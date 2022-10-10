@@ -1,6 +1,7 @@
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import Navbar from './components/Navbar';
+import Loader from './Loader';
 
 export default function Layout() {
   return (
@@ -8,7 +9,9 @@ export default function Layout() {
       <header>
         <Navbar />
       </header>
-      <Outlet />
+      <Suspense fallback={<Loader />}>
+        <Outlet />
+      </Suspense>
     </div>
   );
 }

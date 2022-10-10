@@ -1,7 +1,10 @@
-import Root from './routes/Root';
-import Error from './routes/Error';
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from './Layout';
+import { lazy } from 'react';
+
+const Root = lazy(() => import('./routes/Root'));
+const Error = lazy(() => import('./routes/Error'));
+
 export const router = createBrowserRouter([
   {
     path: '/',
