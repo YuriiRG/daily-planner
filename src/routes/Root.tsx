@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useMainStore } from '../store';
 
 export default function Root() {
