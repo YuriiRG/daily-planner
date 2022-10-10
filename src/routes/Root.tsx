@@ -1,15 +1,14 @@
 import { useState } from 'react';
+import { useMainStore } from '../store';
 
 export default function Root() {
-  const [count, setCount] = useState(0);
-
+  const count = useMainStore((s) => s.counter);
+  const increment = useMainStore((s) => s.inc);
   return (
     <div className='text-center'>
       <h1>Vite + React + TS</h1>
       <div className='card'>
-        <button onClick={() => setCount((c) => c + 1)}>
-          count is {count}
-        </button>
+        <button onClick={increment}>count is {count}</button>
         <div>Some changes</div>
       </div>
     </div>
