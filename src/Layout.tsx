@@ -9,7 +9,7 @@ export default function Layout() {
       <header>
         <Navbar />
       </header>
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<></>}>
         <Outlet />
       </Suspense>
     </div>
