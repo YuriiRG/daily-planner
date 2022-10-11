@@ -6,9 +6,5 @@ export default function Root() {
   const count = useMainStore((s) => s.counter);
   const increment = useMainStore((s) => s.inc);
   const latestDay = useLatestDayData();
-  return (
-    <div className='flex-grow'>
-      <DayDataDisplay {...latestDay} />
-    </div>
-  );
+  return <DayDataDisplay {...latestDay} />;
 }

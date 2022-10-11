@@ -4,5 +4,6 @@ export type DayData = {
 };
 
 export type Todo = {
+  id: number;
   text: string;
 };
