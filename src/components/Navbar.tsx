@@ -4,7 +4,7 @@ import Logo from './Logo';
 import NavbarItem from './NavbarItem';
 
 export default function Navbar() {
-  const [isFolded, setIsFolded] = useState(false);
+  const [isFolded, setIsFolded] = useState(true);
   const items = (
     <>
       <NavbarItem path='/'>Today</NavbarItem>
@@ -26,7 +26,7 @@ export default function Navbar() {
           className={
             'flex flex-col gap-4 sm:flex-row sm:items-center' +
             ' ' +
-            (isFolded ? '' : 'hidden sm:block')
+            (isFolded ? 'hidden sm:block' : '')
           }
         >
           {items}
