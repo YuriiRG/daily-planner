@@ -14,15 +14,21 @@ export default function Navbar() {
   );
   return (
     <>
-      <nav className='flex flex-row items-center gap-4 p-4'>
-        <div className='flex'>
+      <nav className='flex flex-col gap-4 p-4 sm:flex-row sm:items-center'>
+        <div className='flex justify-between'>
           <Logo className='h-10 w-10' />
           <Hamburger
             className='block h-10 w-10 sm:hidden'
             onClick={() => setIsFolded((f) => !f)}
           />
         </div>
-        <div className='flex flex-row items-center gap-4'>
+        <div
+          className={
+            'flex flex-col gap-4 sm:flex-row sm:items-center' +
+            ' ' +
+            (isFolded ? '' : 'hidden sm:block')
+          }
+        >
           {items}
         </div>
       </nav>
