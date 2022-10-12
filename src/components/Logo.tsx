@@ -5,23 +5,18 @@ export default function Logo(props: LogoProps) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
-      width='24'
-      height='24'
       viewBox='0 0 24 24'
-      strokeWidth='2'
+      strokeWidth={2}
       stroke='currentColor'
       fill='none'
       strokeLinecap='round'
       strokeLinejoin='round'
       {...props}
     >
-      <path stroke='none' d='M0 0h24v24H0z' fill='none'></path>
-      <path d='M13 5h8'></path>
-      <path d='M13 9h5'></path>
-      <path d='M13 15h8'></path>
-      <path d='M13 19h5'></path>
-      <rect x='3' y='4' width='6' height='6' rx='1'></rect>
-      <rect x='3' y='14' width='6' height='6' rx='1'></rect>
+      <path d='M0 0h24v24H0z' stroke='none' />
+      <path d='M6 4h11a2 2 0 012 2v12a2 2 0 01-2 2H6a1 1 0 01-1-1V5a1 1 0 011-1m3 0v18' />
+      <path d='M13 8L15 8' />
+      <path d='M13 12L15 12' />
     </svg>
   );
 }
