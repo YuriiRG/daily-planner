@@ -8,4 +8,7 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
   },
+  build: {
+    target: 'es2015',
+  },
 });
