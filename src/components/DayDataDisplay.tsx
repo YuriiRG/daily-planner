@@ -13,7 +13,7 @@ export default function DayDataDisplay({
       </div>
       <div className='min-h-[10rem] bg-blue-500 sm:flex-shrink sm:flex-grow sm:basis-0'>
         {todos.map((todo) => (
-          <div key={todo.id}>todo.text</div>
+          <div key={todo.id}>{todo.text}</div>
         ))}
       </div>
     </div>
