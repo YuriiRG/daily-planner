@@ -1,10 +1,7 @@
 import DayDataDisplay from '../components/DayDataDisplay';
-import useLatestDayData from '../hooks/useLatestDayData';
-import { useMainStore } from '../store';
+import getToday from '../helpers/getToday';
 
 export default function Root() {
-  const count = useMainStore((s) => s.counter);
-  const increment = useMainStore((s) => s.inc);
-  const latestDay = useLatestDayData();
-  return <DayDataDisplay {...latestDay} />;
+  const todayId = getToday();
+  return <DayDataDisplay id={todayId} />;
 }

@@ -2,24 +2,45 @@ import create from 'zustand';
 import { persist } from 'zustand/middleware';
 
 export type MainStore = {
-  counter: number;
+  days: Days;
+};
+type Days = {
+  [id: string]: Day | undefined;
+};
+type Day = {
+  todos: Todo[];
+};
+type Todo = {
+  id: number;
+  text: string;
 };
 
 export type MainStoreActions = {
-  inc: () => void;
   import: (newStore: MainStore) => void;
   export: () => MainStore;
 };
 
 export const initialState: MainStore = {
-  counter: 0,
+  days: {
+    '2022-10-13': {
+      todos: [
+        {
+          id: 123,
+          text: 'test todo',
+        },
+        {
+          id: 1234,
+          text: 'second test todo',
+        },
+      ],
+    },
+  },
 };
 
 export const useMainStore = create<MainStore & MainStoreActions>()(
   persist(
     (set, get) => ({
       ...initialState,
-      inc: () => set((s) => ({ counter: s.counter + 1 })),
       import: (newStore) => set(newStore),
       export: () => get(),
     }),
