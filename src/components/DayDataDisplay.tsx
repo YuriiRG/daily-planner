@@ -1,5 +1,6 @@
 import getToday from '../helpers/getToday';
 import { useMainStore } from '../store';
+import NewTodo from './NewTodo';
 
 type DayDataDisplayProps = {
   id: string;
@@ -18,20 +19,11 @@ export default function DayDataDisplay({ id }: DayDataDisplayProps) {
       </div>
       <div className='min-h-[10rem] bg-blue-500 sm:flex-shrink sm:flex-grow sm:basis-0'>
         {data.todos.map((todo) => (
-          <div key={todo.id}>
-            {todo.id}: {todo.text}
-          </div>
+          <div key={todo.id}>{todo.text}</div>
         ))}
-        <button
-          onClick={() =>
-            addTodo(getToday(), {
-              id: Date.now(),
-              text: 'Lorem ipsum dolor sit amet',
-            })
-          }
-        >
-          Add test todo
-        </button>
+        <NewTodo
+          addTodo={(newTodo) => addTodo(getToday(), newTodo)}
+        />
       </div>
     </div>
   );

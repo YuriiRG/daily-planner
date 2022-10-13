@@ -1,18 +1,20 @@
 import produce from 'immer';
-import { s } from 'vitest/dist/index-6e18a03a';
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
 
 export type MainStore = {
   days: Days;
 };
-type Days = {
+
+export type Days = {
   [id: string]: Day | undefined;
 };
-type Day = {
+
+export type Day = {
   todos: Todo[];
 };
-type Todo = {
+
+export type Todo = {
   id: number;
   text: string;
 };
