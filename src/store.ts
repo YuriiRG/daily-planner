@@ -25,11 +25,11 @@ export const initialState: MainStore = {
     '2022-10-13': {
       todos: [
         {
-          id: 123,
+          id: 1,
           text: 'test todo',
         },
         {
-          id: 1234,
+          id: 2,
           text: 'second test todo',
         },
       ],

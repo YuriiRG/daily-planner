@@ -1,5 +1,4 @@
 import { useMainStore } from '../store';
-import { DayData } from '../types';
 
 type DayDataDisplayProps = {
   id: string;
@@ -17,7 +16,9 @@ export default function DayDataDisplay({ id }: DayDataDisplayProps) {
       </div>
       <div className='min-h-[10rem] bg-blue-500 sm:flex-shrink sm:flex-grow sm:basis-0'>
         {data.todos.map((todo) => (
-          <div key={todo.id}>{todo.text}</div>
+          <div key={todo.id}>
+            {todo.id}: {todo.text}
+          </div>
         ))}
       </div>
     </div>
