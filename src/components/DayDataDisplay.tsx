@@ -1,3 +1,4 @@
+import getToday from '../helpers/getToday';
 import { useMainStore } from '../store';
 
 type DayDataDisplayProps = {
@@ -6,6 +7,7 @@ type DayDataDisplayProps = {
 
 export default function DayDataDisplay({ id }: DayDataDisplayProps) {
   const data = useMainStore((s) => s.days[id]);
+  const addTodo = useMainStore((s) => s.addTodo);
   if (data === undefined) {
     return <div>Error. Day not found</div>;
   }
@@ -20,6 +22,16 @@ export default function DayDataDisplay({ id }: DayDataDisplayProps) {
             {todo.id}: {todo.text}
           </div>
         ))}
+        <button
+          onClick={() =>
+            addTodo(getToday(), {
+              id: Date.now(),
+              text: 'Lorem ipsum dolor sit amet',
+            })
+          }
+        >
+          Add test todo
+        </button>
       </div>
     </div>
   );

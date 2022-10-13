@@ -1,3 +1,5 @@
+import produce from 'immer';
+import { s } from 'vitest/dist/index-6e18a03a';
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -16,6 +18,7 @@ type Todo = {
 };
 
 export type MainStoreActions = {
+  addTodo: (dayId: string, newTodo: Todo) => void;
   import: (newStore: MainStore) => void;
   export: () => MainStore;
 };
@@ -41,6 +44,13 @@ export const useMainStore = create<MainStore & MainStoreActions>()(
   persist(
     (set, get) => ({
       ...initialState,
+      addTodo: (dayId, newTodo) => {
+        set((s) =>
+          produce(s, (draftState) => {
+            draftState.days[dayId]?.todos.push(newTodo);
+          })
+        );
+      },
       import: (newStore) => set(newStore),
       export: () => get(),
     }),
