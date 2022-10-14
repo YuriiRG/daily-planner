@@ -23,23 +23,12 @@ export type MainStoreActions = {
   addTodo: (dayId: string, newTodo: Todo) => void;
   import: (newStore: MainStore) => void;
   export: () => MainStore;
+  initNewDay: (id: string) => void;
+  deleteTodo: (dayId: string, todoId: number) => void;
 };
 
 export const initialState: MainStore = {
-  days: {
-    '2022-10-13': {
-      todos: [
-        {
-          id: 1,
-          text: 'test todo',
-        },
-        {
-          id: 2,
-          text: 'second test todo',
-        },
-      ],
-    },
-  },
+  days: {},
 };
 
 export const useMainStore = create<MainStore & MainStoreActions>()(
@@ -53,6 +42,30 @@ export const useMainStore = create<MainStore & MainStoreActions>()(
           })
         );
       },
+      initNewDay: (newId) =>
+        set((s) => {
+          if (s.days[newId] === undefined) {
+            return { days: { ...s.days, [newId]: { todos: [] } } };
+          }
+          return s;
+        }),
+      deleteTodo: (dayId, todoId) =>
+        set((s) => {
+          const newTodos = s.days[dayId]?.todos.filter(
+            (todo) => todo.id !== todoId
+          );
+          if (!newTodos) {
+            return s;
+          }
+          return {
+            days: {
+              ...s.days,
+              [dayId]: {
+                todos: newTodos,
+              },
+            },
+          };
+        }),
       import: (newStore) => set(newStore),
       export: () => get(),
     }),
