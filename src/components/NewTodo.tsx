@@ -18,6 +18,7 @@ export default function NewTodo({ addTodo }: NewTodoProps) {
     addTodo({
       id: Date.now(),
       text: newTodoText,
+      isDone: false,
     });
     setNewTodoText('');
   };

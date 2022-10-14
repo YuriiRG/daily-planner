@@ -17,14 +17,20 @@ export type Day = {
 export type Todo = {
   id: number;
   text: string;
+  isDone: boolean;
 };
 
 export type MainStoreActions = {
-  addTodo: (dayId: string, newTodo: Todo) => void;
   import: (newStore: MainStore) => void;
   export: () => MainStore;
   initNewDay: (id: string) => void;
   deleteTodo: (dayId: string, todoId: number) => void;
+  addTodo: (dayId: string, newTodo: Todo) => void;
+  editTodo: (
+    dayId: string,
+    todoId: number,
+    newTodo: Omit<Todo, 'id'>
+  ) => void;
 };
 
 export const initialState: MainStore = {
@@ -66,8 +72,33 @@ export const useMainStore = create<MainStore & MainStoreActions>()(
             },
           };
         }),
+      editTodo: (dayId, todoId, newTodo) => {
+        set((s) => {
+          let newTodos = s.days[dayId]?.todos.slice();
+          if (!newTodos) {
+            return s;
+          }
+          newTodos = newTodos.map((todo) => {
+            if (todo.id === todoId) {
+              return {
+                ...newTodo,
+                id: todo.id,
+              };
+            }
+            return todo;
+          });
+          return {
+            days: {
+              ...s.days,
+              [dayId]: {
+                todos: newTodos,
+              },
+            },
+          };
+        });
+      },
       import: (newStore) => set(newStore),
-      export: () => get(),
+      export: () => get() as MainStore,
     }),
     {
       name: 'main-storage',
