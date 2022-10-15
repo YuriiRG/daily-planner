@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useMainStore } from '../store';
 
 type TodoItemProps = {
@@ -12,6 +13,9 @@ export default function TodoItem({ dayId, todoId }: TodoItemProps) {
   );
   const deleteTodo = useMainStore((s) => s.deleteTodo);
   const editTodo = useMainStore((s) => s.editTodo);
+
+  const [isEditing, setIsEditing] = useState(false);
+
   if (!data) {
     return <div>Error, todo not found</div>;
   }
@@ -27,7 +31,25 @@ export default function TodoItem({ dayId, todoId }: TodoItemProps) {
         }
         checked={data.isDone}
       />
-      {data.text}
+      {isEditing ? (
+        <input
+          type={'text'}
+          value={data.text}
+          onInput={(e) =>
+            editTodo(dayId, todoId, {
+              text: e.currentTarget.value,
+              isDone: data.isDone,
+            })
+          }
+          autoFocus={true}
+          onBlur={() => setIsEditing(false)}
+        />
+      ) : (
+        <span onDoubleClick={() => setIsEditing(true)}>
+          {data.text}
+        </span>
+      )}
+
       <button onClick={() => deleteTodo(dayId, todoId)}>X</button>
     </div>
   );
