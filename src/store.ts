@@ -1,5 +1,6 @@
 import produce from 'immer';
 import create from 'zustand';
+import type { StoreApi } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 export type MainStore = {
@@ -21,8 +22,8 @@ export type Todo = {
 };
 
 export type MainStoreActions = {
-  import: (newStore: MainStore) => void;
-  export: () => MainStore;
+  importData: (newStore: MainStore) => void;
+  exportData: () => MainStore;
   initNewDay: (id: string) => void;
   deleteTodo: (dayId: string, todoId: number) => void;
   addTodo: (dayId: string, newTodo: Todo) => void;
@@ -33,72 +34,85 @@ export type MainStoreActions = {
   ) => void;
 };
 
+type Store = MainStore & MainStoreActions;
+
 export const initialState: MainStore = {
   days: {},
 };
 
-export const useMainStore = create<MainStore & MainStoreActions>()(
+function createStoreActions(
+  set: StoreApi<Store>['setState'],
+  get: StoreApi<Store>['getState']
+): MainStoreActions {
+  return {
+    addTodo: (dayId, newTodo) => {
+      set((s) => {
+        return produce(s, (draftState) => {
+          draftState.days[dayId]?.todos.push(newTodo);
+        });
+      });
+    },
+    initNewDay: (newId) => {
+      set((s) => {
+        if (s.days[newId] === undefined) {
+          return { days: { ...s.days, [newId]: { todos: [] } } };
+        }
+        return s;
+      });
+    },
+    deleteTodo: (dayId, todoId) => {
+      set((s) => {
+        const newTodos = s.days[dayId]?.todos.filter(
+          (todo) => todo.id !== todoId
+        );
+        if (!newTodos) {
+          return s;
+        }
+        return {
+          days: {
+            ...s.days,
+            [dayId]: {
+              todos: newTodos,
+            },
+          },
+        };
+      });
+    },
+    editTodo: (dayId, todoId, newTodo) => {
+      set((s) => {
+        let newTodos = s.days[dayId]?.todos.slice();
+        if (!newTodos) {
+          return s;
+        }
+        newTodos = newTodos.map((todo) => {
+          if (todo.id === todoId) {
+            return {
+              ...newTodo,
+              id: todo.id,
+            };
+          }
+          return todo;
+        });
+        return {
+          days: {
+            ...s.days,
+            [dayId]: {
+              todos: newTodos,
+            },
+          },
+        };
+      });
+    },
+    importData: (newStore) => set(newStore),
+    exportData: () => get(),
+  };
+}
+
+export const useMainStore = create<Store>()(
   persist(
     (set, get) => ({
       ...initialState,
-      addTodo: (dayId, newTodo) => {
-        set((s) =>
-          produce(s, (draftState) => {
-            draftState.days[dayId]?.todos.push(newTodo);
-          })
-        );
-      },
-      initNewDay: (newId) =>
-        set((s) => {
-          if (s.days[newId] === undefined) {
-            return { days: { ...s.days, [newId]: { todos: [] } } };
-          }
-          return s;
-        }),
-      deleteTodo: (dayId, todoId) =>
-        set((s) => {
-          const newTodos = s.days[dayId]?.todos.filter(
-            (todo) => todo.id !== todoId
-          );
-          if (!newTodos) {
-            return s;
-          }
-          return {
-            days: {
-              ...s.days,
-              [dayId]: {
-                todos: newTodos,
-              },
-            },
-          };
-        }),
-      editTodo: (dayId, todoId, newTodo) => {
-        set((s) => {
-          let newTodos = s.days[dayId]?.todos.slice();
-          if (!newTodos) {
-            return s;
-          }
-          newTodos = newTodos.map((todo) => {
-            if (todo.id === todoId) {
-              return {
-                ...newTodo,
-                id: todo.id,
-              };
-            }
-            return todo;
-          });
-          return {
-            days: {
-              ...s.days,
-              [dayId]: {
-                todos: newTodos,
-              },
-            },
-          };
-        });
-      },
-      import: (newStore) => set(newStore),
-      export: () => get() as MainStore,
+      ...createStoreActions(set, get),
     }),
     {
       name: 'main-storage',
