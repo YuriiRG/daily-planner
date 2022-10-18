@@ -20,7 +20,7 @@ export default function TodoItem({ dayId, todoId }: TodoItemProps) {
     return <div>Error, todo not found</div>;
   }
   return (
-    <div>
+    <div className='group flex items-end gap-1 p-3 py-2'>
       <input
         type={'checkbox'}
         onChange={(e) =>
@@ -30,6 +30,7 @@ export default function TodoItem({ dayId, todoId }: TodoItemProps) {
           })
         }
         checked={data.isDone}
+        className='h-4 w-4 self-center outline-0 focus:outline-none'
       />
       {isEditing ? (
         <input
@@ -43,14 +44,40 @@ export default function TodoItem({ dayId, todoId }: TodoItemProps) {
           }
           autoFocus={true}
           onBlur={() => setIsEditing(false)}
+          className=''
         />
       ) : (
-        <span onDoubleClick={() => setIsEditing(true)}>
+        <span
+          onDoubleClick={() => setIsEditing(true)}
+          className={
+            data.isDone
+              ? 'text-gray-600 line-through'
+              : 'text-gray-900'
+          }
+        >
           {data.text}
         </span>
       )}
-
-      <button onClick={() => deleteTodo(dayId, todoId)}>X</button>
+      <div className='hidden flex-grow justify-end group-hover:flex'>
+        <button
+          onClick={() => deleteTodo(dayId, todoId)}
+          className='h-6 w-6'
+        >
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            viewBox='0 0 24 24'
+            strokeWidth={2}
+            stroke='currentColor'
+            fill='none'
+            strokeLinecap='round'
+            strokeLinejoin='round'
+          >
+            <path d='M0 0h24v24H0z' stroke='none' />
+            <path d='M18 6L6 18' />
+            <path d='M6 6L18 18' />
+          </svg>
+        </button>
+      </div>
     </div>
   );
 }

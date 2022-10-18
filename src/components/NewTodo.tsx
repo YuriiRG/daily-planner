@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Todo } from '../store';
+import Button from './Button';
 
 type NewTodoProps = {
   addTodo: (newTodo: Todo) => void;
@@ -27,18 +28,26 @@ export default function NewTodo({ addTodo }: NewTodoProps) {
     setIsCreating(false);
     setNewTodoText('');
   };
-  return isCreating ? (
-    <div>
-      <input
-        placeholder='New todo text'
-        value={newTodoText}
-        onInput={(e) => setNewTodoText(e.currentTarget.value)}
-        className='block'
-      />
-      <button onClick={handleAddingTodo}>Add</button>
-      <button onClick={handleCancelingTodo}>Cancel</button>
+  return (
+    <div className='ml-3 mt-3'>
+      {isCreating ? (
+        <>
+          <input
+            placeholder='New todo text'
+            value={newTodoText}
+            onInput={(e) => setNewTodoText(e.currentTarget.value)}
+            className='mb-1 block rounded border-2 px-1'
+          />
+          <Button className='mr-1' onClick={handleAddingTodo}>
+            Add
+          </Button>
+          <Button className='ml-1' onClick={handleCancelingTodo}>
+            Cancel
+          </Button>
+        </>
+      ) : (
+        <Button onClick={handleStartingNewTodo}>Add</Button>
+      )}
     </div>
-  ) : (
-    <button onClick={handleStartingNewTodo}>Add</button>
   );
 }
