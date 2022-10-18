@@ -2,7 +2,6 @@ import getToday from '../helpers/getToday';
 import { useMainStore } from '../store';
 import NewTodo from './NewTodo';
 import TodoItem from './TodoItem';
-import XButton from './XButton';
 
 type DayDataDisplayProps = {
   id: string;
