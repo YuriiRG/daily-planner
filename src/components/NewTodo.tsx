@@ -29,7 +29,7 @@ export default function NewTodo({ addTodo }: NewTodoProps) {
     setNewTodoText('');
   };
   return (
-    <div className='ml-3 mt-3'>
+    <div className='mt-2'>
       {isCreating ? (
         <>
           <input

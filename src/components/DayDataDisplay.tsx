@@ -7,7 +7,7 @@ import XButton from './XButton';
 type DayDataDisplayProps = {
   id: string;
 };
-
+// Add check if length of one word is equal 0 don't allow to create todo item
 export default function DayDataDisplay({ id }: DayDataDisplayProps) {
   const data = useMainStore((s) => s.days[id]);
   const addTodo = useMainStore((s) => s.addTodo);
@@ -19,10 +19,13 @@ export default function DayDataDisplay({ id }: DayDataDisplayProps) {
       <div className='sm:flex-shrink sm:flex-grow sm:basis-0'>
         {id}
       </div>
-      <div className='border-l-2 border-gray-300 text-lg sm:flex-shrink sm:basis-80'>
-        {data.todos.map((todo) => (
-          <TodoItem key={todo.id} dayId={id} todoId={todo.id} />
-        ))}
+      <div className='border-l-2 border-gray-300 pl-3 text-lg sm:flex-shrink sm:basis-80'>
+        <h2 className='text-2xl'>Todos</h2>
+        <div className='flex flex-col'>
+          {data.todos.map((todo) => (
+            <TodoItem key={todo.id} dayId={id} todoId={todo.id} />
+          ))}
+        </div>
         <NewTodo
           addTodo={(newTodo) => addTodo(getToday(), newTodo)}
         />

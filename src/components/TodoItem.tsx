@@ -20,7 +20,7 @@ export default function TodoItem({ dayId, todoId }: TodoItemProps) {
     return <div>Error, todo not found</div>;
   }
   return (
-    <div className='group flex items-end gap-1 p-3 py-2'>
+    <div className='group flex items-end gap-2'>
       <input
         type={'checkbox'}
         onChange={(e) =>
@@ -50,7 +50,7 @@ export default function TodoItem({ dayId, todoId }: TodoItemProps) {
         <div
           onDoubleClick={() => setIsEditing(true)}
           className={
-            'max-w-[15rem] break-words ' +
+            'max-w-[14.5rem] break-words ' +
             (data.isDone
               ? 'text-gray-600 line-through'
               : 'text-gray-900 ')
@@ -62,7 +62,7 @@ export default function TodoItem({ dayId, todoId }: TodoItemProps) {
       <div className='hidden flex-grow justify-end self-center group-hover:flex'>
         <button
           onClick={() => deleteTodo(dayId, todoId)}
-          className='h-6 w-6'
+          className='mr-3 h-6 w-6'
         >
           <svg
             xmlns='http://www.w3.org/2000/svg'
