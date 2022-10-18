@@ -47,18 +47,19 @@ export default function TodoItem({ dayId, todoId }: TodoItemProps) {
           className=''
         />
       ) : (
-        <span
+        <div
           onDoubleClick={() => setIsEditing(true)}
           className={
-            data.isDone
+            'max-w-[15rem] break-words ' +
+            (data.isDone
               ? 'text-gray-600 line-through'
-              : 'text-gray-900'
+              : 'text-gray-900 ')
           }
         >
           {data.text}
-        </span>
+        </div>
       )}
-      <div className='hidden flex-grow justify-end group-hover:flex'>
+      <div className='hidden flex-grow justify-end self-center group-hover:flex'>
         <button
           onClick={() => deleteTodo(dayId, todoId)}
           className='h-6 w-6'
