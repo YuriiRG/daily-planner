@@ -1,6 +1,7 @@
 import getToday from '../helpers/getToday';
 import { useMainStore } from '../store';
 import NewTodo from './NewTodo';
+import NotesEditor from './NotesEditor';
 import TodoItem from './TodoItem';
 
 type DayDataDisplayProps = {
@@ -16,7 +17,7 @@ export default function DayDataDisplay({ id }: DayDataDisplayProps) {
   return (
     <div className='flex flex-col items-stretch sm:h-full sm:flex-grow sm:flex-row'>
       <div className='sm:flex-shrink sm:flex-grow sm:basis-0'>
-        {id}
+        <NotesEditor />
       </div>
       <div className='border-l-2 border-gray-300 pl-3 text-lg sm:flex-shrink sm:basis-80'>
         <h2 className='text-2xl'>Todos</h2>
