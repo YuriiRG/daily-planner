@@ -59,7 +59,7 @@ export default function TodoItem({ dayId, todoId }: TodoItemProps) {
           {data.text}
         </div>
       )}
-      <div className='hidden flex-grow justify-end self-center group-hover:flex'>
+      <div className='hidden h-4 w-4 flex-grow justify-end self-center group-hover:flex'>
         <button
           onClick={() => deleteTodo(dayId, todoId)}
           className='mr-3 h-6 w-6'
