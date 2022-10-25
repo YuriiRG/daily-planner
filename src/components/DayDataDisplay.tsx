@@ -17,7 +17,7 @@ export default function DayDataDisplay({ id }: DayDataDisplayProps) {
   return (
     <div className='flex flex-col items-stretch sm:flex-grow sm:flex-row'>
       <div className='flex flex-col sm:flex-grow sm:basis-0 sm:flex-row sm:items-start sm:justify-center'>
-        <NotesEditor />
+        <NotesEditor dayId={id} />
       </div>
       <div className='border-l-2 border-gray-300 pl-3 text-lg sm:basis-80'>
         <h2 className='text-2xl'>Todos</h2>

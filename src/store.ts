@@ -13,6 +13,7 @@ export type Days = {
 
 export type Day = {
   todos: Todo[];
+  notes: string;
 };
 
 export type Todo = {
@@ -32,6 +33,7 @@ export type MainStoreActions = {
     todoId: number,
     newTodo: Omit<Todo, 'id'>
   ) => void;
+  editNotes: (dayId: string, newNotes: string) => void;
 };
 
 type Store = MainStore & MainStoreActions;
@@ -55,7 +57,9 @@ function createStoreActions(
     initNewDay: (newId) => {
       set((s) => {
         if (s.days[newId] === undefined) {
-          return { days: { ...s.days, [newId]: { todos: [] } } };
+          return {
+            days: { ...s.days, [newId]: { todos: [], notes: '' } },
+          };
         }
         return s;
       });
@@ -68,11 +72,16 @@ function createStoreActions(
         if (!newTodos) {
           return s;
         }
+        const notes = s.days[dayId]?.notes;
+        if (notes === undefined) {
+          return s;
+        }
         return {
           days: {
             ...s.days,
             [dayId]: {
               todos: newTodos,
+              notes,
             },
           },
         };
@@ -93,11 +102,33 @@ function createStoreActions(
           }
           return todo;
         });
+        const notes = s.days[dayId]?.notes;
+        if (notes === undefined) {
+          return s;
+        }
         return {
           days: {
             ...s.days,
             [dayId]: {
               todos: newTodos,
+              notes,
+            },
+          },
+        };
+      });
+    },
+    editNotes: (dayId, newNotes) => {
+      set((s) => {
+        const todos = s.days[dayId]?.todos.slice();
+        if (!todos) {
+          return s;
+        }
+        return {
+          days: {
+            ...s.days,
+            [dayId]: {
+              todos,
+              notes: newNotes,
             },
           },
         };
