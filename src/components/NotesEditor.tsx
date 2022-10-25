@@ -2,7 +2,7 @@ export default function NotesEditor() {
   return (
     <div
       contentEditable={true}
-      className='mx-auto break-words outline outline-2 outline-gray-500 sm:w-[30rem]'
+      className='m-2 break-words rounded-lg border-2 border-gray-500 p-2 outline-none sm:basis-[30rem]'
     >
       <div>
         <br />
