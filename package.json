@@ -16,9 +16,14 @@
     "*.{ts,tsx,css,html,md}": "pnpm prettier"
   },
   "dependencies": {
+    "immer": "^9.0.15",
     "react": "^18.2.0",
+    "react-contenteditable": "^3.3.6",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.4.1"
+    "react-router-dom": "^6.4.1",
+    "slate": "^0.82.1",
+    "slate-react": "^0.83.2",
+    "zustand": "^4.1.2"
   },
   "devDependencies": {
     "@testing-library/dom": "^8.18.1",
