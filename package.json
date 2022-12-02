@@ -10,7 +10,7 @@
     "lint": "eslint src --max-warnings 0",
     "test": "vitest",
     "format": "rome format --write .",
-    "check:format": "rome ci ."
+    "format:check": "rome ci ."
   },
   "dependencies": {
     "immer": "^9.0.15",
