@@ -28,18 +28,14 @@ export type MainStoreActions = {
   initNewDay: (id: string) => void;
   deleteTodo: (dayId: string, todoId: number) => void;
   addTodo: (dayId: string, newTodo: Todo) => void;
-  editTodo: (
-    dayId: string,
-    todoId: number,
-    newTodo: Omit<Todo, 'id'>
-  ) => void;
+  editTodo: (dayId: string, todoId: number, newTodo: Omit<Todo, 'id'>) => void;
   editNotes: (dayId: string, newNotes: string) => void;
 };
 
 type Store = MainStore & MainStoreActions;
 
 export const initialState: MainStore = {
-  days: {},
+  days: {}
 };
 
 function createStoreActions(
@@ -58,7 +54,7 @@ function createStoreActions(
       set((s) => {
         if (s.days[newId] === undefined) {
           return {
-            days: { ...s.days, [newId]: { todos: [], notes: '' } },
+            days: { ...s.days, [newId]: { todos: [], notes: '' } }
           };
         }
         return s;
@@ -81,9 +77,9 @@ function createStoreActions(
             ...s.days,
             [dayId]: {
               todos: newTodos,
-              notes,
-            },
-          },
+              notes
+            }
+          }
         };
       });
     },
@@ -97,7 +93,7 @@ function createStoreActions(
           if (todo.id === todoId) {
             return {
               ...newTodo,
-              id: todo.id,
+              id: todo.id
             };
           }
           return todo;
@@ -111,9 +107,9 @@ function createStoreActions(
             ...s.days,
             [dayId]: {
               todos: newTodos,
-              notes,
-            },
-          },
+              notes
+            }
+          }
         };
       });
     },
@@ -128,14 +124,14 @@ function createStoreActions(
             ...s.days,
             [dayId]: {
               todos,
-              notes: newNotes,
-            },
-          },
+              notes: newNotes
+            }
+          }
         };
       });
     },
     importData: (newStore) => set(newStore),
-    exportData: () => get(),
+    exportData: () => get()
   };
 }
 
@@ -143,10 +139,10 @@ export const useMainStore = create<Store>()(
   persist(
     (set, get) => ({
       ...initialState,
-      ...createStoreActions(set, get),
+      ...createStoreActions(set, get)
     }),
     {
-      name: 'main-storage',
+      name: 'main-storage'
     }
   )
 );

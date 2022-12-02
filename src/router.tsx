@@ -12,12 +12,12 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Root />,
+        element: <Root />
       },
       {
         path: '*',
-        element: <Error />,
-      },
-    ],
-  },
+        element: <Error />
+      }
+    ]
+  }
 ]);

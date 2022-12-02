@@ -6,9 +6,9 @@ export default defineConfig({
   plugins: [react()],
   test: {
     globals: true,
-    environment: 'jsdom',
+    environment: 'jsdom'
   },
   build: {
-    target: 'es2015',
-  },
+    target: 'es2015'
+  }
 });
