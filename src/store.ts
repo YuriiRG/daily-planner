@@ -8,7 +8,7 @@ export type MainStore = {
 };
 
 export type Days = {
-  [id: string]: Day | undefined;
+  [id: string]: Day;
 };
 
 export type Day = {
