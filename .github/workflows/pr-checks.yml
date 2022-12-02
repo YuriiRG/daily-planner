@@ -37,6 +37,21 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Run the linter
         run: pnpm lint
+  format:
+    name: Run the formatter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3.4.1
+        with:
+          node-version: 16
+      - uses: pnpm/action-setup@v2.2.2
+        with:
+          version: latest
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Run the linter
+        run: pnpm format:check
   tests:
     name: Run the tests
     runs-on: ubuntu-latest
