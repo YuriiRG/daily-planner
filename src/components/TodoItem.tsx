@@ -8,8 +8,7 @@ type TodoItemProps = {
 
 export default function TodoItem({ dayId, todoId }: TodoItemProps) {
   const data = useMainStore(
-    (s) =>
-      s.days[dayId]?.todos.filter((todo) => todo.id === todoId)[0]
+    (s) => s.days[dayId]?.todos.filter((todo) => todo.id === todoId)[0]
   );
   const deleteTodo = useMainStore((s) => s.deleteTodo);
   const editTodo = useMainStore((s) => s.editTodo);
@@ -26,7 +25,7 @@ export default function TodoItem({ dayId, todoId }: TodoItemProps) {
         onChange={(e) =>
           editTodo(dayId, todoId, {
             text: data.text,
-            isDone: e.currentTarget.checked,
+            isDone: e.currentTarget.checked
           })
         }
         checked={data.isDone}
@@ -39,7 +38,7 @@ export default function TodoItem({ dayId, todoId }: TodoItemProps) {
           onInput={(e) =>
             editTodo(dayId, todoId, {
               text: e.currentTarget.value,
-              isDone: data.isDone,
+              isDone: data.isDone
             })
           }
           autoFocus={true}
@@ -51,9 +50,7 @@ export default function TodoItem({ dayId, todoId }: TodoItemProps) {
           onDoubleClick={() => setIsEditing(true)}
           className={
             'max-w-[14.5rem] break-words ' +
-            (data.isDone
-              ? 'text-gray-600 line-through'
-              : 'text-gray-900 ')
+            (data.isDone ? 'text-gray-600 line-through' : 'text-gray-900 ')
           }
         >
           {data.text}
