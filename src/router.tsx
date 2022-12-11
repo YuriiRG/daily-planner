@@ -13,7 +13,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Root />,
+        element: <Root />
       },
       {
         path: '/archive',
@@ -21,8 +21,8 @@ export const router = createBrowserRouter([
       },
       {
         path: '*',
-        element: <Error />,
-      },
-    ],
-  },
+        element: <Error />
+      }
+    ]
+  }
 ]);

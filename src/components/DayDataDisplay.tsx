@@ -26,9 +26,7 @@ export default function DayDataDisplay({ id }: DayDataDisplayProps) {
             <TodoItem key={todo.id} dayId={id} todoId={todo.id} />
           ))}
         </div>
-        <NewTodo
-          addTodo={(newTodo) => addTodo(getToday(), newTodo)}
-        />
+        <NewTodo addTodo={(newTodo) => addTodo(getToday(), newTodo)} />
       </div>
     </div>
   );

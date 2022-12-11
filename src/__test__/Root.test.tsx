@@ -24,8 +24,6 @@ describe('Basic tests', () => {
       'Do some things, a test todo'
     );
     await userEvent.click(screen.getByText('Add'));
-    expect(
-      screen.getAllByText('Do some things, a test todo').length
-    ).toBe(1);
+    expect(screen.getAllByText('Do some things, a test todo').length).toBe(1);
   });
 });
