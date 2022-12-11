@@ -5,7 +5,7 @@ import { lazy } from 'react';
 const Root = lazy(() => import('./routes/Root'));
 const Error = lazy(() => import('./routes/Error'));
 const Archive = lazy(() => import('./routes/Archive'));
-
+const ArchiveDay = lazy(() => import('./routes/ArchiveDay'));
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -18,6 +18,10 @@ export const router = createBrowserRouter([
       {
         path: '/archive',
         element: <Archive />,
+      },
+      {
+        path: '/archive/:dayId',
+        element: <ArchiveDay />
       },
       {
         path: '*',
