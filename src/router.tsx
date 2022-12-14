@@ -17,7 +17,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/archive',
-        element: <Archive />,
+        element: <Archive />
       },
       {
         path: '/archive/:dayId',

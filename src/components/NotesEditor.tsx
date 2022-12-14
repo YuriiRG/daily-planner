@@ -12,7 +12,7 @@ export default function NotesEditor({ dayId }: NotesEditorProps) {
     (s) => (newHtml: string) => s.editNotes(dayId, newHtml)
   );
   if (html === undefined) {
-    setHtml("");
+    setHtml('');
   }
   return (
     <ContentEditable
