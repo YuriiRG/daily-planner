@@ -14,13 +14,13 @@ export type Todo = {
   isDone: boolean;
 };
 
-export type MainStore = {
+export type MainState = {
   days: Day[];
 };
 
-export type MainStoreActions = {
-  importData: (newStore: MainStore) => void;
-  exportData: () => MainStore;
+export type MainActions = {
+  importData: (newStore: MainState) => void;
+  exportData: () => MainState;
   initNewDay: (id: string) => void;
   deleteTodo: (dayId: string, todoId: number) => void;
   addTodo: (dayId: string, newTodo: Todo) => void;
@@ -28,12 +28,12 @@ export type MainStoreActions = {
   editNotes: (dayId: string, newNotes: string) => void;
 };
 
-type Store = MainStore & MainStoreActions;
+type MainStore = MainState & MainActions;
 
-export const initialState: MainStore = {
+export const initialState: MainState = {
   days: []
 };
-export const useMainStore = create<Store>()(
+export const useMainStore = create<MainStore>()(
   immer(
     persist(
       (set, get) => ({
