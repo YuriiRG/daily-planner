@@ -7,12 +7,12 @@ type NotesEditorProps = {
 };
 
 export default function NotesEditor({ dayId }: NotesEditorProps) {
-  const html = useMainStore((s) => s.days[dayId]?.notes);
+  const html = useMainStore((s) => s.days.find((d) => d.id === dayId)?.notes);
   const setHtml = useMainStore(
     (s) => (newHtml: string) => s.editNotes(dayId, newHtml)
   );
   if (html === undefined) {
-    setHtml('');
+    throw new Error('Day not found');
   }
   return (
     <ContentEditable

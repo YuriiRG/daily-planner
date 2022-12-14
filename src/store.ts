@@ -1,17 +1,10 @@
-import produce from 'immer';
 import create from 'zustand';
 import type { StoreApi } from 'zustand';
 import { persist } from 'zustand/middleware';
-
-export type MainStore = {
-  days: Days;
-};
-
-export type Days = {
-  [id: string]: Day;
-};
+import { immer } from 'zustand/middleware/immer';
 
 export type Day = {
+  id: string;
   todos: Todo[];
   notes: string;
 };
@@ -22,20 +15,24 @@ export type Todo = {
   isDone: boolean;
 };
 
+export type MainStore = {
+  days: Day[];
+};
+
 export type MainStoreActions = {
   importData: (newStore: MainStore) => void;
   exportData: () => MainStore;
   initNewDay: (id: string) => void;
   deleteTodo: (dayId: string, todoId: number) => void;
   addTodo: (dayId: string, newTodo: Todo) => void;
-  editTodo: (dayId: string, todoId: number, newTodo: Omit<Todo, 'id'>) => void;
+  editTodo: (dayId: string, newTodo: Todo) => void;
   editNotes: (dayId: string, newNotes: string) => void;
 };
 
 type Store = MainStore & MainStoreActions;
 
 export const initialState: MainStore = {
-  days: {}
+  days: []
 };
 
 function createStoreActions(
@@ -43,106 +40,62 @@ function createStoreActions(
   get: StoreApi<Store>['getState']
 ): MainStoreActions {
   return {
-    addTodo: (dayId, newTodo) => {
+    addTodo: (dayId, newTodo) =>
       set((s) => {
-        return produce(s, (draftState) => {
-          draftState.days[dayId]?.todos.push(newTodo);
-        });
-      });
-    },
-    initNewDay: (newId) => {
+        s.days.find((d) => d.id === dayId)?.todos.push(newTodo);
+        return s;
+      }),
+    initNewDay: (newId) =>
       set((s) => {
-        if (s.days[newId] === undefined) {
-          return {
-            days: { ...s.days, [newId]: { todos: [], notes: '' } }
-          };
+        console.log(s);
+        if (s.days.find((d) => d.id === newId) === undefined) {
+          s.days.push({ id: newId, todos: [], notes: '' });
         }
         return s;
-      });
-    },
-    deleteTodo: (dayId, todoId) => {
+      }),
+    deleteTodo: (dayId, todoId) =>
       set((s) => {
-        const newTodos = s.days[dayId]?.todos.filter(
-          (todo) => todo.id !== todoId
+        const todos = s.days.find((d) => d.id === dayId)?.todos;
+        todos?.splice(
+          todos.findIndex((t) => t.id === todoId),
+          1
         );
-        if (!newTodos) {
-          return s;
-        }
-        const notes = s.days[dayId]?.notes;
-        if (notes === undefined) {
-          return s;
-        }
-        return {
-          days: {
-            ...s.days,
-            [dayId]: {
-              todos: newTodos,
-              notes
-            }
-          }
-        };
-      });
-    },
-    editTodo: (dayId, todoId, newTodo) => {
+        return s;
+      }),
+    editTodo: (dayId, newTodo) =>
       set((s) => {
-        let newTodos = s.days[dayId]?.todos.slice();
-        if (!newTodos) {
-          return s;
+        const todos = s.days.find((d) => (d.id = dayId))?.todos;
+        const todoIndex = todos?.findIndex((t) => t.id === newTodo.id);
+        if (!todos || !todoIndex) {
+          throw new Error('Todos not found');
         }
-        newTodos = newTodos.map((todo) => {
-          if (todo.id === todoId) {
-            return {
-              ...newTodo,
-              id: todo.id
-            };
-          }
-          return todo;
-        });
-        const notes = s.days[dayId]?.notes;
-        if (notes === undefined) {
-          return s;
-        }
-        return {
-          days: {
-            ...s.days,
-            [dayId]: {
-              todos: newTodos,
-              notes
-            }
-          }
-        };
-      });
-    },
-    editNotes: (dayId, newNotes) => {
+        todos[todoIndex] = newTodo;
+        return s;
+      }),
+    editNotes: (dayId, newNotes) =>
       set((s) => {
-        const todos = s.days[dayId]?.todos.slice();
-        if (!todos) {
-          return s;
+        const day = s.days.find((d) => d.id === dayId);
+        if (!day) {
+          throw new Error('Day not found');
         }
-        return {
-          days: {
-            ...s.days,
-            [dayId]: {
-              todos,
-              notes: newNotes
-            }
-          }
-        };
-      });
-    },
+        day.notes = newNotes;
+        return s;
+      }),
     importData: (newStore) => set(newStore),
     exportData: () => get()
   };
 }
 
 export const useMainStore = create<Store>()(
-  persist(
-    (set, get) => ({
-      ...initialState,
-      ...createStoreActions(set, get)
-    }),
-    {
-      name: 'main-storage'
-    }
+  immer(
+    persist(
+      (set, get) => ({
+        ...initialState,
+        ...createStoreActions(set, get)
+      }),
+      {
+        name: 'main-storage'
+      }
+    )
   )
 );
