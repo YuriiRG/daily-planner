@@ -7,11 +7,8 @@ type TodoItemProps = {
 };
 
 export default function TodoItem({ dayId, todoId }: TodoItemProps) {
-  const data = useMainStore(
-    (s) =>
-      s.days
-        .find((d) => d.id === dayId)
-        ?.todos.filter((todo) => todo.id === todoId)[0]
+  const data = useMainStore((s) =>
+    s.days.find((d) => d.id === dayId)?.todos?.find((t) => t.id === todoId)
   );
   const deleteTodo = useMainStore((s) => s.deleteTodo);
   const editTodo = useMainStore((s) => s.editTodo);
