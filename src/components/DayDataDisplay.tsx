@@ -9,7 +9,7 @@ type DayDataDisplayProps = {
 };
 // Add check if length of one word is equal 0 don't allow to create todo item
 export default function DayDataDisplay({ id }: DayDataDisplayProps) {
-  const data = useMainStore((s) => s.days[id]);
+  const data = useMainStore((s) => s.days.find((d) => d.id === id));
   const addTodo = useMainStore((s) => s.addTodo);
   if (data === undefined) {
     return <div>Error. Day not found</div>;

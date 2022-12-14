@@ -7,8 +7,8 @@ type TodoItemProps = {
 };
 
 export default function TodoItem({ dayId, todoId }: TodoItemProps) {
-  const data = useMainStore(
-    (s) => s.days[dayId]?.todos.filter((todo) => todo.id === todoId)[0]
+  const data = useMainStore((s) =>
+    s.days.find((d) => d.id === dayId)?.todos?.find((t) => t.id === todoId)
   );
   const deleteTodo = useMainStore((s) => s.deleteTodo);
   const editTodo = useMainStore((s) => s.editTodo);
@@ -23,7 +23,8 @@ export default function TodoItem({ dayId, todoId }: TodoItemProps) {
       <input
         type={'checkbox'}
         onChange={(e) =>
-          editTodo(dayId, todoId, {
+          editTodo(dayId, {
+            id: todoId,
             text: data.text,
             isDone: e.currentTarget.checked
           })
@@ -36,7 +37,8 @@ export default function TodoItem({ dayId, todoId }: TodoItemProps) {
           type={'text'}
           value={data.text}
           onInput={(e) =>
-            editTodo(dayId, todoId, {
+            editTodo(dayId, {
+              id: todoId,
               text: e.currentTarget.value,
               isDone: data.isDone
             })
