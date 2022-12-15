@@ -8,7 +8,7 @@ export default function Navbar() {
   const items = (
     <>
       <NavbarItem path='/'>Today</NavbarItem>
-      <NavbarItem path='/permanent'>Permanent</NavbarItem>
+      <NavbarItem path='/archive/permanent'>Permanent</NavbarItem>
       <NavbarItem path='/archive'>Archive</NavbarItem>
     </>
   );
