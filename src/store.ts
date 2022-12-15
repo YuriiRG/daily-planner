@@ -31,7 +31,13 @@ export type MainActions = {
 type MainStore = MainState & MainActions;
 
 export const initialState: MainState = {
-  days: []
+  days: [
+    {
+      id: 'permanent',
+      notes: '',
+      todos: []
+    }
+  ]
 };
 export const useMainStore = create<MainStore>()(
   immer(
